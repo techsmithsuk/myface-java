@@ -1,4 +1,4 @@
-package controllers;
+package techsmiths.myface.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @RequestMapping("/posts")
 public class PostController {
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView getAllPostsPage(@RequestParam(value = "page", required = false) Integer page) {
         return new ModelAndView("posts/allPosts");
     }

@@ -1,1 +1,1 @@
-MyFace
+techsmiths.myface.MyFace
