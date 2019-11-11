@@ -17,7 +17,7 @@ public abstract class DatabaseService {
                 "/" + databaseName +
                 "?user=" + username +
                 "&password=" + password +
-                "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT&useSSL=false";
+                "&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT&useSSL=false&allowPublicKeyRetrieval=true";
 
         jdbi = Jdbi.create(connectionString);
     }
