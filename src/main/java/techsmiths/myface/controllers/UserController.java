@@ -41,8 +41,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ModelAndView getSingleUserPage(@PathVariable("id") int id) {
-        return new ModelAndView("users/user");
+    public ModelAndView getSingleUserPage(@PathVariable("username") String username) {
+        User user = userService.getUser(username);
+        UserViewModel userViewModel = new UserViewModel(user);
+
+        return new ModelAndView("users/user", "model", userViewModel);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)

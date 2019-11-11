@@ -17,4 +17,13 @@ public class UserService extends DatabaseService {
                         .list()
         );
     }
+
+    public User getUser(String username) {
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT * FROM users WHERE username = :username")
+                        .bind("username", username)
+                        .mapToBean(User.class)
+                        .one()
+        );
+    }
 }
