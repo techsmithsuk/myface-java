@@ -48,4 +48,21 @@ public class UserService extends DatabaseService {
                         .execute()
         );
     }
+
+    public void createUser(User user) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate(
+                        "INSERT INTO users " +
+                                "(username, email, first_name, last_name, profile_image, banner_image) " +
+                                "VALUES " +
+                                "(:username, :email, :firstName, :lastName, :profileImage, :bannerImage)")
+                        .bind("username", user.getUsername())
+                        .bind("email", user.getEmail())
+                        .bind("firstName", user.getFirstName())
+                        .bind("lastName", user.getLastName())
+                        .bind("profileImage", user.getProfileImage())
+                        .bind("bannerImage", user.getBannerImage())
+                        .execute()
+        );
+    }
 }

@@ -57,7 +57,8 @@ public class UserController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public RedirectView createUser() {
+    public RedirectView createUser(User user) {
+        userService.createUser(user);
         return new RedirectView("/users");
     }
 }
