@@ -10,7 +10,6 @@ import techsmiths.myface.models.viewmodels.UserViewModel;
 import techsmiths.myface.services.UserService;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
