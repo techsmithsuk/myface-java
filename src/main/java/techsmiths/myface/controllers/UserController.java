@@ -37,18 +37,18 @@ public class UserController {
         return new ModelAndView("users/allUsers", "model", allUsersViewModel);
     }
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
-    public ModelAndView getSingleUserPage(@PathVariable("username") String username) {
-        User user = userService.getUser(username);
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ModelAndView getSingleUserPage(@PathVariable("id") int id) {
+        User user = userService.getUser(id);
         UserViewModel userViewModel = new UserViewModel(user);
 
         return new ModelAndView("users/user", "model", userViewModel);
     }
 
-    @RequestMapping(value = "/{username}", method = RequestMethod.POST)
-    public RedirectView updateUser(@PathVariable("username") String username, @ModelAttribute User user) {
-        userService.updateUser(username, user);
-        return new RedirectView(String.format("/users/%s", user.getUsername()));
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    public RedirectView updateUser(@PathVariable("id") int id, @ModelAttribute User user) {
+        userService.updateUser(id, user);
+        return new RedirectView(String.format("/users/%s", id));
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)

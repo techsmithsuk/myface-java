@@ -3,10 +3,14 @@ package techsmiths.myface.models.viewmodels;
 import techsmiths.myface.models.dbmodels.User;
 
 public class UserViewModel {
-    User user;
+    private final User user;
 
     public UserViewModel(User user) {
         this.user = user;
+    }
+
+    public Integer getId() {
+        return user.getId();
     }
 
     public String getUsername() {

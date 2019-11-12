@@ -1,12 +1,21 @@
 package techsmiths.myface.models.dbmodels;
 
 public class User {
+    private Integer id;
     private String username;
     private String email;
     private String firstName;
     private String lastName;
     private String profileImage;
     private String bannerImage;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getUsername() {
         return username;
