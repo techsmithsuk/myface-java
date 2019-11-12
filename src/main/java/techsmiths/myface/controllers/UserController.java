@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class UserController {
     private static final int PAGE_SIZE = 10;
 
-    private UserService userService;
+    private final UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
@@ -29,10 +29,7 @@ public class UserController {
         int offset = page_index * PAGE_SIZE;
 
         List<User> users = userService.getAllUsers(PAGE_SIZE, offset);
-        List<UserViewModel> userViewModels = users.stream()
-                .map(UserViewModel::new)
-                .collect(Collectors.toList());
-        AllUsersViewModel allUsersViewModel = new AllUsersViewModel(userViewModels);
+        AllUsersViewModel allUsersViewModel = new AllUsersViewModel(users);
 
         return new ModelAndView("users/allUsers", "model", allUsersViewModel);
     }

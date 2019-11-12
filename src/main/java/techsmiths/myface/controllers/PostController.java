@@ -6,14 +6,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import techsmiths.myface.models.dbmodels.Post;
+import techsmiths.myface.models.viewmodels.AllPostsViewModel;
+import techsmiths.myface.services.PostService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/posts")
 public class PostController {
+    private static final int PAGE_SIZE = 10;
+
+    private final PostService postService;
+
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView getAllPostsPage(@RequestParam(value = "page", required = false) Integer page) {
-        return new ModelAndView("posts/allPosts");
+        int page_index = page == null ? 0 : page - 1;
+        int offset = page_index * PAGE_SIZE;
+
+        List<Post> posts = postService.getAllPosts(PAGE_SIZE, offset);
+        AllPostsViewModel postsViewModel = new AllPostsViewModel(posts);
+
+        return new ModelAndView("posts/allPosts", "model", postsViewModel);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
