@@ -26,4 +26,26 @@ public class UserService extends DatabaseService {
                         .one()
         );
     }
+
+    public void updateUser(String username, User user) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate(
+                            "UPDATE users SET " +
+                                    "username = :newUsername" +
+                                    "email = :email" +
+                                    "first_name = :firstName" +
+                                    "last_name = :lastName" +
+                                    "profile_image = :profileImage" +
+                                    "banner_image = :bannerImage" +
+                            "WHERE username = :oldUsername")
+                        .bind("newUsername", user.getUsername())
+                        .bind("email", user.getEmail())
+                        .bind("firstName", user.getFirstName())
+                        .bind("lastName", user.getLastName())
+                        .bind("profileImage", user.getProfileImage())
+                        .bind("bannerImage", user.getBannerImage())
+                        .bind("oldUsername", username)
+                        .execute()
+        );
+    }
 }

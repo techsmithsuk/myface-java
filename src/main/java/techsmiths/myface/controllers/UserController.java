@@ -1,10 +1,7 @@
 package techsmiths.myface.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import techsmiths.myface.models.dbmodels.User;
@@ -40,7 +37,7 @@ public class UserController {
         return new ModelAndView("users/allUsers", "model", allUsersViewModel);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{username}", method = RequestMethod.GET)
     public ModelAndView getSingleUserPage(@PathVariable("username") String username) {
         User user = userService.getUser(username);
         UserViewModel userViewModel = new UserViewModel(user);
@@ -48,9 +45,10 @@ public class UserController {
         return new ModelAndView("users/user", "model", userViewModel);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public RedirectView updateUser(@PathVariable("id") int id) {
-        return new RedirectView(String.format("/users/%s", id));
+    @RequestMapping(value = "/{username}", method = RequestMethod.POST)
+    public RedirectView updateUser(@PathVariable("username") String username, @ModelAttribute User user) {
+        userService.updateUser(username, user);
+        return new RedirectView(String.format("/users/%s", user.getUsername()));
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
