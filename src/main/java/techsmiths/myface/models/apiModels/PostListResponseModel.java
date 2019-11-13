@@ -7,18 +7,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PostListResponseModel {
-    private List<PostViewModel> items;
+    private List<PostViewModel> posts;
     private Boolean hasNextPage;
     private Integer currentPage;
 
-    public PostListResponseModel(List<Post> items, Integer currentPage, Boolean hasNextPage) {
-        this.items = items.stream().map(PostViewModel::new).collect(Collectors.toList());
+    public PostListResponseModel(List<Post> posts, Integer currentPage, Boolean hasNextPage) {
+        this.posts = posts.stream().map(PostViewModel::new).collect(Collectors.toList());
         this.hasNextPage = hasNextPage;
         this.currentPage = currentPage;
     }
 
-    public List<PostViewModel> getItems() {
-        return items;
+    public List<PostViewModel> getPosts() {
+        return posts;
     }
 
     public String getNextPage() {

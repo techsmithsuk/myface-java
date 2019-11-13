@@ -65,4 +65,12 @@ public class UserService extends DatabaseService {
                         .execute()
         );
     }
+
+    public int countAllPosts() {
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT COUNT(*) FROM users")
+                        .mapTo(Integer.class)
+                        .one()
+        );
+    }
 }
