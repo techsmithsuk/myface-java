@@ -73,4 +73,12 @@ public class PostService extends DatabaseService {
                         .execute()
         );
     }
+
+    public int countAllPosts() {
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT COUNT(*) FROM posts")
+                        .mapTo(Integer.class)
+                        .one()
+        );
+    }
 }
