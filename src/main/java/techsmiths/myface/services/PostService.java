@@ -10,7 +10,6 @@ import techsmiths.myface.models.dbmodels.Sender;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PostService extends DatabaseService {
@@ -39,7 +38,9 @@ public class PostService extends DatabaseService {
                             "FROM posts as post " +
                             "JOIN users as sender on post.sender_user_id = sender.id " +
                             "JOIN users as receiver on post.receiver_user_id = receiver.id " +
-                            "LIMIT :limit OFFSET :offset")
+                            "ORDER BY post.posted_at DESC " +
+                            "LIMIT :limit " +
+                            "OFFSET :offset")
                         .bind("limit", limit)
                         .bind("offset", offset)
                         .registerRowMapper(BeanMapper.factory(Post.class, "post"))
