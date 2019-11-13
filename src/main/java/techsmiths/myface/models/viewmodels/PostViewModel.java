@@ -2,6 +2,8 @@ package techsmiths.myface.models.viewmodels;
 
 import techsmiths.myface.models.dbmodels.Post;
 
+import java.sql.Date;
+
 public class PostViewModel {
     private final Post post;
 
@@ -27,5 +29,9 @@ public class PostViewModel {
 
     public String getImage() {
         return post.getImage();
+    }
+
+    public Date getPostedAt() {
+        return post.getPostedAt();
     }
 }

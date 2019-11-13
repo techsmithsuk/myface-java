@@ -1,11 +1,14 @@
 package techsmiths.myface.models.dbmodels;
 
+import java.sql.Date;
+
 public class Post {
     private int id;
     private User sender;
     private User receiver;
     private String message;
     private String image;
+    private Date postedAt;
 
     public int getId() {
         return id;
@@ -45,5 +48,13 @@ public class Post {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public Date getPostedAt() {
+        return postedAt;
+    }
+
+    public void setPostedAt(Date postedAt) {
+        this.postedAt = postedAt;
     }
 }
