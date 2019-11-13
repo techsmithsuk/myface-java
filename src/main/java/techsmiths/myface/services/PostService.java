@@ -64,9 +64,9 @@ public class PostService extends DatabaseService {
         jdbi.withHandle(handle ->
                 handle.createUpdate(
                         "INSERT INTO posts " +
-                                "(sender_user_id, receiver_user_id, message, image) " +
+                                "(sender_user_id, receiver_user_id, message, image, posted_at) " +
                                 "VALUES " +
-                                "(:senderUserId, :receiverUserId, :message, :image)")
+                                "(:senderUserId, :receiverUserId, :message, :image NOW())")
                         .bind("senderUserId", post.getSenderId())
                         .bind("receiverUserId", post.getReceiverId())
                         .bind("message", post.getMessage())
