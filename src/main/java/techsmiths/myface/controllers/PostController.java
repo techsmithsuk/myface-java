@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import techsmiths.myface.models.apiModels.CreatePostModel;
 import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.models.viewmodels.AllPostsViewModel;
 import techsmiths.myface.services.PostService;
@@ -41,7 +42,7 @@ public class PostController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public RedirectView createPost(@ModelAttribute Post post) {
+    public RedirectView createPost(@ModelAttribute CreatePostModel post) {
         postService.createPost(post);
         return new RedirectView("/posts");
     }
