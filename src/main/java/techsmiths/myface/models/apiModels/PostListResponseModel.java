@@ -25,7 +25,7 @@ public class PostListResponseModel {
         if (!hasNextPage) {
             return null;
         }
-        return String.format("/api/posts/%d", currentPage + 1);
+        return String.format("/api/posts?page=%d", currentPage + 1);
     }
 
     public String getPreviousPage() {
@@ -33,6 +33,6 @@ public class PostListResponseModel {
             return null;
         }
 
-        return String.format("/api/posts/%d", currentPage - 1);
+        return String.format("/api/posts?page=%d", currentPage - 1);
     }
 }

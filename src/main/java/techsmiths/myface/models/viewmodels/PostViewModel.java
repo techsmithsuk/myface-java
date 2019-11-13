@@ -2,7 +2,7 @@ package techsmiths.myface.models.viewmodels;
 
 import techsmiths.myface.models.dbmodels.Post;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class PostViewModel {
     private final Post post;

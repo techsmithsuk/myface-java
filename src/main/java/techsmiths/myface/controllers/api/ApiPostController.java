@@ -3,7 +3,9 @@ package techsmiths.myface.controllers.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import techsmiths.myface.models.apiModels.PostListResponseModel;
 import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.services.PostService;
@@ -22,7 +24,8 @@ public class ApiPostController {
         this.postService = postService;
     }
 
-    @RequestMapping("")
+    @ResponseBody
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public PostListResponseModel getPosts(@RequestParam(value = "page") int page,
                                           @RequestParam(value = "page_size", required = false) Integer requestedPageSize) {
         int pageSize = requestedPageSize == null ? PAGE_SIZE : requestedPageSize;

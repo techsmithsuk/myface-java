@@ -21,7 +21,7 @@ public class PostService extends DatabaseService {
                                 "post.id as post_id, " +
                                 "post.message as post_message, " +
                                 "post.image as post_image, " +
-                                "post.posted_at as post_posted_at " +
+                                "post.posted_at as post_posted_at, " +
                                 "sender.id as sender_id, " +
                                 "sender.username as sender_username, " +
                                 "sender.email as sender_email, " +
