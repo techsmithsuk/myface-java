@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.apiModels.CreatePostModel;
 import techsmiths.myface.models.dbmodels.Post;
+import techsmiths.myface.models.dbmodels.PostWithUsers;
 import techsmiths.myface.models.dbmodels.Receiver;
 import techsmiths.myface.models.dbmodels.Sender;
 
@@ -15,7 +16,7 @@ import java.util.List;
 @Service
 public class PostService extends DatabaseService {
 
-    public List<Post> getAllPosts(Pagination pagination) {
+    public List<PostWithUsers> getAllPosts(Pagination pagination) {
         return jdbi.withHandle(handle ->
                 new ArrayList<>(handle.createQuery("" +
                             "SELECT " +
@@ -33,9 +34,9 @@ public class PostService extends DatabaseService {
                         .registerRowMapper(BeanMapper.factory(Post.class, "post"))
                         .registerRowMapper(BeanMapper.factory(Sender.class, "sender"))
                         .registerRowMapper(BeanMapper.factory(Receiver.class, "receiver"))
-                        .reduceRows(new LinkedHashMap<Integer, Post>(), (map, row) -> {
-                            Post post = map.computeIfAbsent(
-                                    row.getColumn("post_id", Integer.class), id -> row.getRow(Post.class)
+                        .reduceRows(new LinkedHashMap<Integer, PostWithUsers>(), (map, row) -> {
+                            PostWithUsers post = map.computeIfAbsent(
+                                    row.getColumn("post_id", Integer.class), id -> row.getRow(PostWithUsers.class)
                             );
 
                             post.setSender(row.getRow(Sender.class));

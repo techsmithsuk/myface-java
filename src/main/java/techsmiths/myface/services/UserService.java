@@ -19,7 +19,7 @@ public class UserService extends DatabaseService {
         );
     }
 
-    public User getUser(int id) {
+    public User getUser(Long id) {
         return jdbi.withHandle(handle ->
                 handle.createQuery("SELECT * FROM users WHERE id = :id")
                         .bind("id", id)
@@ -28,7 +28,7 @@ public class UserService extends DatabaseService {
         );
     }
 
-    public void updateUser(int id, User user) {
+    public void updateUser(Long id, User user) {
         jdbi.withHandle(handle ->
                 handle.createUpdate(
                             "UPDATE users SET " +

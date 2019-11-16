@@ -4,41 +4,41 @@ import java.util.Date;
 import java.util.List;
 
 public class Post {
-    private int id;
-    private User sender;
-    private User receiver;
+    private Long id;
+    private Long senderId;
+    private Long receiverId;
     private String message;
     private String image;
     private Date postedAt;
 
     public static List<String> getAllColumnNames() {
         return List.of(
-                "id", "sender", "receiver", "message", "image", "postedAt"
+                "id", "senderId", "receiverId", "message", "image", "postedAt"
         );
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public User getSender() {
-        return sender;
+    public Long getSenderId() {
+        return senderId;
     }
 
-    public void setSender(User sender) {
-        this.sender = sender;
+    public void setSenderId(Long senderId) {
+        this.senderId = senderId;
     }
 
-    public User getReceiver() {
-        return receiver;
+    public Long getReceiverId() {
+        return receiverId;
     }
 
-    public void setReceiver(User receiver) {
-        this.receiver = receiver;
+    public void setReceiverId(Long receiverId) {
+        this.receiverId = receiverId;
     }
 
     public String getMessage() {

@@ -1,24 +1,24 @@
 package techsmiths.myface.models.apiModels;
 
 public class CreatePostModel {
-    private int senderId;
-    private int receiverId;
+    private Long senderId;
+    private Long receiverId;
     private String message;
     private String image;
 
-    public int getSenderId() {
+    public Long getSenderId() {
         return senderId;
     }
 
-    public void setSenderId(int senderId) {
+    public void setSenderId(Long senderId) {
         this.senderId = senderId;
     }
 
-    public int getReceiverId() {
+    public Long getReceiverId() {
         return receiverId;
     }
 
-    public void setReceiverId(int receiverId) {
+    public void setReceiverId(Long receiverId) {
         this.receiverId = receiverId;
     }
 

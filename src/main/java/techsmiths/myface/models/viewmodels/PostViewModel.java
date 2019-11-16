@@ -1,17 +1,17 @@
 package techsmiths.myface.models.viewmodels;
 
-import techsmiths.myface.models.dbmodels.Post;
+import techsmiths.myface.models.dbmodels.PostWithUsers;
 
 import java.util.Date;
 
 public class PostViewModel {
-    private final Post post;
+    private final PostWithUsers post;
 
-    public PostViewModel(Post post) {
+    public PostViewModel(PostWithUsers post) {
         this.post = post;
     }
 
-    public int getId() {
+    public Long getId() {
         return post.getId();
     }
 

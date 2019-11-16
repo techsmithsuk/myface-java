@@ -10,6 +10,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.apiModels.CreatePostModel;
 import techsmiths.myface.models.dbmodels.Post;
+import techsmiths.myface.models.dbmodels.PostWithUsers;
 import techsmiths.myface.models.viewmodels.AllPostsViewModel;
 import techsmiths.myface.services.PostService;
 
@@ -29,7 +30,7 @@ public class PostController {
                                         @RequestParam(value = "pageSize", required = false) Integer pageSize) {
         int numberOfPosts = postService.countAllPosts();
         Pagination pagination = new Pagination(page, pageSize, numberOfPosts);
-        List<Post> posts = postService.getAllPosts(pagination);
+        List<PostWithUsers> posts = postService.getAllPosts(pagination);
         AllPostsViewModel postsViewModel = new AllPostsViewModel(posts);
 
         return new ModelAndView("posts/allPosts", "model", postsViewModel);

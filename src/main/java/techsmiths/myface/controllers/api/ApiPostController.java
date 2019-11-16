@@ -2,13 +2,11 @@ package techsmiths.myface.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.apiModels.PostListResponseModel;
 import techsmiths.myface.models.dbmodels.Post;
+import techsmiths.myface.models.dbmodels.PostWithUsers;
 import techsmiths.myface.services.PostService;
 
 import java.util.List;
@@ -29,7 +27,7 @@ public class ApiPostController {
                                           @RequestParam(value = "page_size", required = false) Integer pageSize) {
         int numberOfPosts = postService.countAllPosts();
         Pagination pagination = new Pagination(page, pageSize, numberOfPosts);
-        List<Post> posts = postService.getAllPosts(pagination);
+        List<PostWithUsers> posts = postService.getAllPosts(pagination);
 
         return new PostListResponseModel(posts, pagination);
     }

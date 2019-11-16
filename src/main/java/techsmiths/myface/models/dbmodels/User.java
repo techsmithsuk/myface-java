@@ -3,7 +3,7 @@ package techsmiths.myface.models.dbmodels;
 import java.util.List;
 
 public class User {
-    private Integer id;
+    private Long id;
     private String username;
     private String email;
     private String firstName;
@@ -15,11 +15,11 @@ public class User {
         return List.of("id", "username", "email", "firstName", "lastName", "profileImage", "bannerImage");
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
