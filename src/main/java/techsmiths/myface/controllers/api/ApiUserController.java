@@ -25,7 +25,7 @@ public class ApiUserController {
     }
 
     @ResponseBody
-    @RequestMapping("")
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public UserListResponseModel getUsers(@RequestParam(value = "page", required = false) Integer page,
                                           @RequestParam(value = "page_size", required = false) Integer pageSize) {
         int numberOfPosts = userService.countAllPosts();
@@ -36,13 +36,13 @@ public class ApiUserController {
     }
 
     @ResponseBody
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public UserModel getUserDetails(@PathVariable("id") Long id) {
         User user = userService.getUserDetails(id);
         return new UserModel(user);
     }
 
-    @RequestMapping("/create")
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity createUser(@ModelAttribute UpdateUserModel updateUserModel) {
         Long id = userService.createUser(updateUserModel);
         URI location = URI.create(String.format("/api/users/%d", id));
@@ -50,9 +50,15 @@ public class ApiUserController {
     }
 
     @ResponseBody
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public UserModel updateUser(@PathVariable("id") Long id, UpdateUserModel updateUserModel) {
         User user = userService.updateUser(id, updateUserModel);
         return new UserModel(user);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUser(id);
     }
 }

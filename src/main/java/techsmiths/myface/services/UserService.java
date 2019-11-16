@@ -77,4 +77,12 @@ public class UserService extends DatabaseService {
                         .one()
         );
     }
+
+    public void deleteUser(Long id) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate("DELETE FROM users WHERE id = :id")
+                        .bind("id", id)
+                        .execute()
+        );
+    }
 }
