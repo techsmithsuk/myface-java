@@ -1,23 +1,21 @@
 package techsmiths.myface.models.apiModels;
 
 import techsmiths.myface.helpers.Pagination;
-import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
-import techsmiths.myface.models.viewmodels.PostViewModel;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PostListResponseModel {
-    private List<PostViewModel> posts;
+    private List<PostModel> posts;
     private Pagination pagination;
 
     public PostListResponseModel(List<PostWithUsers> posts, Pagination pagination) {
-        this.posts = posts.stream().map(PostViewModel::new).collect(Collectors.toList());
+        this.posts = posts.stream().map(PostModel::new).collect(Collectors.toList());
         this.pagination = pagination;
     }
 
-    public List<PostViewModel> getPosts() {
+    public List<PostModel> getPosts() {
         return posts;
     }
 

@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.apiModels.CreatePostModel;
 import techsmiths.myface.models.apiModels.PostListResponseModel;
+import techsmiths.myface.models.apiModels.PostModel;
 import techsmiths.myface.models.apiModels.UpdatePostModel;
-import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 import techsmiths.myface.services.PostService;
 
@@ -38,8 +38,9 @@ public class ApiPostController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public PostWithUsers getPostDetails(@PathVariable("id") Long id) {
-        return postService.getPostDetails(id);
+    public PostModel getPostDetails(@PathVariable("id") Long id) {
+        PostWithUsers post = postService.getPostDetails(id);
+        return new PostModel(post);
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
@@ -51,7 +52,8 @@ public class ApiPostController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public PostWithUsers updatePosts(@PathVariable("id") Long id, @ModelAttribute UpdatePostModel post) {
-        return postService.updatePost(id, post);
+    public PostModel updatePosts(@PathVariable("id") Long id, @ModelAttribute UpdatePostModel updatePostModel) {
+        PostWithUsers post = postService.updatePost(id, updatePostModel);
+        return new PostModel(post);
     }
 }
