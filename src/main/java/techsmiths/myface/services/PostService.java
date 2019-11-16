@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.helpers.PostWithUsersMapper;
 import techsmiths.myface.models.apiModels.CreatePostModel;
+import techsmiths.myface.models.apiModels.UpdatePostModel;
 import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 
@@ -30,7 +31,7 @@ public class PostService extends DatabaseService {
         );
     }
 
-    public PostWithUsers getPostById(Long id) {
+    public PostWithUsers getPostDetails(Long id) {
         return jdbi.withHandle(handle ->
                 handle
                         .createQuery(
@@ -71,5 +72,28 @@ public class PostService extends DatabaseService {
                         .mapTo(Integer.class)
                         .one()
         );
+    }
+
+    public PostWithUsers updatePost(Long id, UpdatePostModel updatePostModel) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate(
+                        "UPDATE posts SET " +
+                        "( " +
+                            "senderId = :senderId " +
+                            "receiverId = :receiverId " +
+                            "message = :message " +
+                            "image = :image " +
+                            "posted_at = :postedAt " +
+                        ") " +
+                        "WHERE id = :id")
+                        .bind("id", id)
+                        .bind("senderId", updatePostModel.getSenderId())
+                        .bind("receiverId", updatePostModel.getReceiverId())
+                        .bind("message", updatePostModel.getMessage())
+                        .bind("image", updatePostModel.getImage())
+                        .bind("postedAt", updatePostModel.getPostedAt())
+                        .execute()
+        );
+        return getPostDetails(id);
     }
 }
