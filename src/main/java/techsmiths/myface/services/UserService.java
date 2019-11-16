@@ -1,9 +1,8 @@
 package techsmiths.myface.services;
 
 import org.springframework.stereotype.Service;
-import techsmiths.myface.helpers.Pagination;
-import techsmiths.myface.models.apiModels.UpdateUserModel;
-import techsmiths.myface.models.apiModels.UsersFilter;
+import techsmiths.myface.models.apiModels.users.UpdateUserModel;
+import techsmiths.myface.models.apiModels.users.UsersFilter;
 import techsmiths.myface.models.dbmodels.User;
 
 import java.util.List;

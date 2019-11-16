@@ -1,4 +1,4 @@
-package techsmiths.myface.models.apiModels;
+package techsmiths.myface.models.apiModels.users;
 
 public class UpdateUserModel {
     private String username;

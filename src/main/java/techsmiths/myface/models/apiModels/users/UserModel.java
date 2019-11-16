@@ -1,4 +1,4 @@
-package techsmiths.myface.models.apiModels;
+package techsmiths.myface.models.apiModels.users;
 
 import techsmiths.myface.models.dbmodels.User;
 

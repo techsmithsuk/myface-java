@@ -1,4 +1,4 @@
-package techsmiths.myface.models.apiModels;
+package techsmiths.myface.models.apiModels.posts;
 
 import java.util.Date;
 

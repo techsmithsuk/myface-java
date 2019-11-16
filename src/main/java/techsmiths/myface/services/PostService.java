@@ -2,8 +2,8 @@ package techsmiths.myface.services;
 
 import org.springframework.stereotype.Service;
 import techsmiths.myface.helpers.PostWithUsersMapper;
-import techsmiths.myface.models.apiModels.PostsFilter;
-import techsmiths.myface.models.apiModels.UpdatePostModel;
+import techsmiths.myface.models.apiModels.posts.PostsFilter;
+import techsmiths.myface.models.apiModels.posts.UpdatePostModel;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 
 import java.util.Date;

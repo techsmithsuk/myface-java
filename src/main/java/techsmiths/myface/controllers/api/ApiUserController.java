@@ -4,11 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import techsmiths.myface.helpers.Pagination;
-import techsmiths.myface.models.apiModels.UpdateUserModel;
-import techsmiths.myface.models.apiModels.UserListResponseModel;
-import techsmiths.myface.models.apiModels.UserModel;
-import techsmiths.myface.models.apiModels.UsersFilter;
+import techsmiths.myface.models.apiModels.users.UpdateUserModel;
+import techsmiths.myface.models.apiModels.users.UserListResponseModel;
+import techsmiths.myface.models.apiModels.users.UserModel;
+import techsmiths.myface.models.apiModels.users.UsersFilter;
 import techsmiths.myface.models.dbmodels.User;
 import techsmiths.myface.services.UserService;
 

@@ -1,5 +1,6 @@
-package techsmiths.myface.models.apiModels;
+package techsmiths.myface.models.apiModels.posts;
 
+import techsmiths.myface.models.apiModels.ListResponseModel;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 
 import java.util.List;

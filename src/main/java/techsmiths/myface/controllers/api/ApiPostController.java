@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import techsmiths.myface.models.apiModels.PostsFilter;
-import techsmiths.myface.models.apiModels.PostListResponseModel;
-import techsmiths.myface.models.apiModels.PostModel;
-import techsmiths.myface.models.apiModels.UpdatePostModel;
+import techsmiths.myface.models.apiModels.posts.PostsFilter;
+import techsmiths.myface.models.apiModels.posts.PostListResponseModel;
+import techsmiths.myface.models.apiModels.posts.PostModel;
+import techsmiths.myface.models.apiModels.posts.UpdatePostModel;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 import techsmiths.myface.services.PostService;
 

@@ -1,7 +1,8 @@
-package techsmiths.myface.models.apiModels;
+package techsmiths.myface.models.apiModels.posts;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.util.UriBuilder;
+import techsmiths.myface.models.apiModels.Filter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
