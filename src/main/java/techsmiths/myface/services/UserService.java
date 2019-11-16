@@ -19,7 +19,7 @@ public class UserService extends DatabaseService {
         );
     }
 
-    public User getUser(Long id) {
+    public User getUserDetails(Long id) {
         return jdbi.withHandle(handle ->
                 handle.createQuery("SELECT * FROM users WHERE id = :id")
                         .bind("id", id)

@@ -36,7 +36,7 @@ public class UserController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ModelAndView getSingleUserPage(@PathVariable("id") Long id) {
-        User user = userService.getUser(id);
+        User user = userService.getUserDetails(id);
         UserViewModel userViewModel = new UserViewModel(user);
 
         return new ModelAndView("users/user", "model", userViewModel);
