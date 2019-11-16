@@ -1,5 +1,7 @@
 package techsmiths.myface.models.dbmodels;
 
+import java.util.List;
+
 public class User {
     private Integer id;
     private String username;
@@ -8,6 +10,10 @@ public class User {
     private String lastName;
     private String profileImage;
     private String bannerImage;
+
+    public static List<String> getAllColumnNames() {
+        return List.of("id", "username", "email", "firstName", "lastName", "profileImage", "bannerImage");
+    }
 
     public Integer getId() {
         return id;

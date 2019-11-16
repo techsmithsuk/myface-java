@@ -1,6 +1,7 @@
 package techsmiths.myface.models.dbmodels;
 
 import java.util.Date;
+import java.util.List;
 
 public class Post {
     private int id;
@@ -9,6 +10,12 @@ public class Post {
     private String message;
     private String image;
     private Date postedAt;
+
+    public static List<String> getAllColumnNames() {
+        return List.of(
+                "id", "sender", "receiver", "message", "image", "postedAt"
+        );
+    }
 
     public int getId() {
         return id;

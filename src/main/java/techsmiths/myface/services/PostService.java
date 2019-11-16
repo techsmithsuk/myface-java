@@ -19,24 +19,9 @@ public class PostService extends DatabaseService {
         return jdbi.withHandle(handle ->
                 new ArrayList<>(handle.createQuery("" +
                             "SELECT " +
-                                "post.id as post_id, " +
-                                "post.message as post_message, " +
-                                "post.image as post_image, " +
-                                "post.posted_at as post_posted_at, " +
-                                "sender.id as sender_id, " +
-                                "sender.username as sender_username, " +
-                                "sender.email as sender_email, " +
-                                "sender.first_name as sender_first_name, " +
-                                "sender.last_name as sender_last_name, " +
-                                "sender.profile_image as sender_profile_image, " +
-                                "sender.banner_image as sender_banner_image, " +
-                                "receiver.id as receiver_id, " +
-                                "receiver.username as receiver_username, " +
-                                "receiver.email as receiver_email, " +
-                                "receiver.first_name as receiver_first_name, " +
-                                "receiver.last_name as receiver_last_name, " +
-                                "receiver.profile_image as receiver_profile_image, " +
-                                "receiver.banner_image as receiver_banner_image " +
+                                selectAllPostColumns("post") +
+                                selectAllUserColumns("sender") +
+                                selectAllUserColumns("receiver") +
                             "FROM posts as post " +
                             "JOIN users as sender on post.sender_user_id = sender.id " +
                             "JOIN users as receiver on post.receiver_user_id = receiver.id " +
