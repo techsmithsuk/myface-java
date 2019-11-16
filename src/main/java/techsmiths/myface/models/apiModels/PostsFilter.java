@@ -1,32 +1,16 @@
 package techsmiths.myface.models.apiModels;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.util.UriBuilder;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class PostsFilter {
-    private Integer page = 1;
-    private Integer pageSize = 10;
+public class PostsFilter extends Filter {
     private Long senderId;
     private Long receiverId;
     private Date sentBefore;
     private Date sentAfter;
-
-    public Integer getPage() {
-        return page;
-    }
-
-    public void setPage(Integer page) {
-        this.page = page;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
 
     public Long getSenderId() {
         return senderId;
@@ -62,7 +46,24 @@ public class PostsFilter {
         this.sentAfter = sentAfter;
     }
 
-    public Integer getOffset() {
-        return (page - 1) * pageSize;
+    @Override
+    public void appendQueryParams(UriBuilder builder) {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        if (senderId != null) {
+            builder.queryParam("senderId", senderId);
+        }
+
+        if (receiverId != null) {
+            builder.queryParam("receiverId", receiverId);
+        }
+
+        if (sentAfter != null) {
+            builder.queryParam("sentAfter", formatter.format(sentAfter));
+        }
+
+        if (sentBefore != null) {
+            builder.queryParam("sentBefore", formatter.format(sentBefore));
+        }
     }
 }

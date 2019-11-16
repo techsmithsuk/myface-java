@@ -8,6 +8,7 @@ import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.apiModels.UpdateUserModel;
 import techsmiths.myface.models.apiModels.UserListResponseModel;
 import techsmiths.myface.models.apiModels.UserModel;
+import techsmiths.myface.models.apiModels.UsersFilter;
 import techsmiths.myface.models.dbmodels.User;
 import techsmiths.myface.services.UserService;
 
@@ -26,13 +27,11 @@ public class ApiUserController {
 
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public UserListResponseModel getUsers(@RequestParam(value = "page", required = false) Integer page,
-                                          @RequestParam(value = "page_size", required = false) Integer pageSize) {
-        int numberOfPosts = userService.countAllPosts();
-        Pagination pagination = new Pagination(page, pageSize, numberOfPosts);
-        List<User> users = userService.getAllUsers(pagination);
+    public UserListResponseModel getUsers(UsersFilter filter) {
+        int numberOfPosts = userService.countUsers(filter);
+        List<User> users = userService.searchUsers(filter);
 
-        return new UserListResponseModel(users, pagination);
+        return new UserListResponseModel(users, filter, numberOfPosts);
     }
 
     @ResponseBody

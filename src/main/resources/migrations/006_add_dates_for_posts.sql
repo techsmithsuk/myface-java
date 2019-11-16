@@ -6,3 +6,5 @@ UPDATE posts SET posted_at = DATE_ADD(NOW(), INTERVAL FLOOR(RAND() * -10000) SEC
 
 # Finally make the column not-null, so that in the future all posts must have a datetime.
 ALTER TABLE posts MODIFY COLUMN posted_at datetime NOT NULL;
+
+SELECT * from users where last_name LIKE 'abram';
