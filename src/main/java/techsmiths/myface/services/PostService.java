@@ -92,4 +92,12 @@ public class PostService extends DatabaseService {
         );
         return getPostDetails(id);
     }
+
+    public void deletePost(Long id) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate("DELETE FROM posts WHERE id = :id")
+                        .bind("id", id)
+                        .execute()
+        );
+    }
 }

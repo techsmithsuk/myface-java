@@ -51,8 +51,14 @@ public class ApiPostController {
 
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public PostModel updatePosts(@PathVariable("id") Long id, @ModelAttribute UpdatePostModel updatePostModel) {
+    public PostModel updatePost(@PathVariable("id") Long id, @ModelAttribute UpdatePostModel updatePostModel) {
         PostWithUsers post = postService.updatePost(id, updatePostModel);
         return new PostModel(post);
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deletePost(@PathVariable("id") Long id) {
+        postService.deletePost(id);
     }
 }
