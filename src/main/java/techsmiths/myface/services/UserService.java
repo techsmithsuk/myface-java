@@ -29,7 +29,7 @@ public class UserService extends DatabaseService {
         );
     }
 
-    public void updateUser(Long id, User user) {
+    public User updateUser(Long id, UpdateUserModel user) {
         jdbi.withHandle(handle ->
                 handle.createUpdate(
                             "UPDATE users SET " +
@@ -49,6 +49,7 @@ public class UserService extends DatabaseService {
                         .bind("id", id)
                         .execute()
         );
+        return getUserDetails(id);
     }
 
     public Long createUser(UpdateUserModel user) {

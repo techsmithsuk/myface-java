@@ -48,4 +48,11 @@ public class ApiUserController {
         URI location = URI.create(String.format("/api/users/%d", id));
         return ResponseEntity.created(location).build();
     }
+
+    @ResponseBody
+    @RequestMapping("/{id}")
+    public UserModel updateUser(@PathVariable("id") Long id, UpdateUserModel updateUserModel) {
+        User user = userService.updateUser(id, updateUserModel);
+        return new UserModel(user);
+    }
 }

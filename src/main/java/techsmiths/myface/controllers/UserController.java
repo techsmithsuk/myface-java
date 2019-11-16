@@ -44,7 +44,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public RedirectView updateUser(@PathVariable("id") Long id, @ModelAttribute User user) {
+    public RedirectView updateUser(@PathVariable("id") Long id, @ModelAttribute UpdateUserModel user) {
         userService.updateUser(id, user);
         return new RedirectView(String.format("/users/%s", id));
     }
