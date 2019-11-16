@@ -31,4 +31,10 @@ public class ApiPostController {
 
         return new PostListResponseModel(posts, pagination);
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public PostWithUsers getPost(@PathVariable("id") Long id) {
+        return postService.getPost(id);
+    }
 }
