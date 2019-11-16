@@ -4,6 +4,7 @@ import techsmiths.myface.models.apiModels.comments.CommentFilter;
 import techsmiths.myface.models.apiModels.comments.UpdateCommentModel;
 import techsmiths.myface.models.dbmodels.Comment;
 
+import java.util.Date;
 import java.util.List;
 
 public class CommentService extends DatabaseService {
@@ -61,5 +62,22 @@ public class CommentService extends DatabaseService {
                     .execute()
         );
         return getComment(id);
+    }
+
+    public Long createComment(UpdateCommentModel comment) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate(
+                        "INSERT INTO comments " +
+                            "(sender_id, post_id, message, sent_at) " +
+                            "VALUES " +
+                            "(:senderId, :postId, :message, :sentAt)"
+                        )
+                        .bind("senderId", comment.getSenderId())
+                        .bind("postId", comment.getPostId())
+                        .bind("message", comment.getMessage())
+                        .bind("sentAt", comment.getSentAt() == null ? new Date() : comment.getSentAt())
+                        .execute()
+        );
+        return getLastAddedId();
     }
 }

@@ -1,5 +1,6 @@
 package techsmiths.myface.controllers.api;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import techsmiths.myface.models.apiModels.comments.UpdateCommentModel;
 import techsmiths.myface.models.dbmodels.Comment;
 import techsmiths.myface.services.CommentService;
 
+import java.net.URI;
 import java.util.List;
 
 @Controller
@@ -43,5 +45,12 @@ public class ApiCommentsController {
     public CommentModel updateComment(@PathVariable("id") Long id, UpdateCommentModel updateCommentModel) {
         Comment comment = commentService.updateComment(id, updateCommentModel);
         return new CommentModel(comment);
+    }
+
+    @RequestMapping("/create")
+    public ResponseEntity createComment(UpdateCommentModel updateCommentModel) {
+        Long id = commentService.createComment(updateCommentModel);
+        URI location = URI.create("/api/comments/" + id);
+        return ResponseEntity.created(location).build();
     }
 }
