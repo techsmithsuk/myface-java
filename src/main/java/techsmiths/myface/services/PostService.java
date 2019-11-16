@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.helpers.PostWithUsersMapper;
 import techsmiths.myface.models.apiModels.CreatePostModel;
+import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 
 import java.util.List;
@@ -29,7 +30,7 @@ public class PostService extends DatabaseService {
         );
     }
 
-    public PostWithUsers getPost(Long id) {
+    public PostWithUsers getPostById(Long id) {
         return jdbi.withHandle(handle ->
                 handle
                         .createQuery(
@@ -44,7 +45,7 @@ public class PostService extends DatabaseService {
         );
     }
 
-    public void createPost(CreatePostModel post) {
+    public Long createPost(CreatePostModel post) {
         jdbi.withHandle(handle ->
                 handle.createUpdate(
                         "INSERT INTO posts " +
@@ -56,6 +57,11 @@ public class PostService extends DatabaseService {
                         .bind("message", post.getMessage())
                         .bind("image", post.getImage())
                         .execute()
+        );
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT LAST_INSERT_ID()")
+                        .mapTo(Long.class)
+                        .one()
         );
     }
 
