@@ -1,11 +1,13 @@
 package techsmiths.myface.models.apiModels;
 
-import techsmiths.myface.models.dbmodels.Post;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 
 import java.util.Date;
 
 public class PostModel {
+    public static final String DATE_PATTERN = "yyyy-MM-dd HH:mm:ss";
+
     private final PostWithUsers post;
 
     public PostModel(PostWithUsers post) {
@@ -32,6 +34,7 @@ public class PostModel {
         return post.getImage();
     }
 
+    @JsonFormat(pattern = DATE_PATTERN)
     public Date getPostedAt() {
         return post.getPostedAt();
     }

@@ -1,8 +1,8 @@
 package techsmiths.myface.services;
 
 import org.springframework.stereotype.Service;
-import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.helpers.PostWithUsersMapper;
+import techsmiths.myface.models.apiModels.PostsFilter;
 import techsmiths.myface.models.apiModels.UpdatePostModel;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class PostService extends DatabaseService {
 
-    public List<PostWithUsers> getAllPosts(Pagination pagination) {
+    public List<PostWithUsers> searchPosts(PostsFilter filter) {
         return jdbi.withHandle(handle ->
                 handle
                         .createQuery(
@@ -20,11 +20,19 @@ public class PostService extends DatabaseService {
                             "FROM posts as post " +
                             "JOIN users as sender on post.sender_user_id = sender.id " +
                             "JOIN users as receiver on post.receiver_user_id = receiver.id " +
+                            "WHERE (:senderId is NULL OR post.sender_user_id = :senderId) " +
+                            "AND (:receiverId is NULL OR post.receiver_user_id = :receiverId) " +
+                            "AND (:sentBefore is NULL OR post.posted_at < :sentBefore) " +
+                            "AND (:sentAfter is NULL OR post.posted_at > :sentAfter) " +
                             "ORDER BY post.posted_at DESC " +
                             "LIMIT :limit " +
                             "OFFSET :offset")
-                        .bind("limit", pagination.getLimit())
-                        .bind("offset", pagination.getOffset())
+                        .bind("senderId", filter.getSenderId())
+                        .bind("receiverId", filter.getReceiverId())
+                        .bind("sentBefore", filter.getSentBefore())
+                        .bind("sentAfter", filter.getSentAfter())
+                        .bind("limit", filter.getPageSize())
+                        .bind("offset", filter.getOffset())
                         .map(new PostWithUsersMapper())
                         .list()
         );
@@ -62,9 +70,18 @@ public class PostService extends DatabaseService {
         return getLastAddedId();
     }
 
-    public int countAllPosts() {
+    public int countPosts(PostsFilter filter) {
         return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT COUNT(*) FROM posts")
+                handle.createQuery(
+                        "SELECT COUNT(*) FROM posts " +
+                            "WHERE (:senderId is NULL OR sender_user_id = :senderId) " +
+                            "AND (:receiverId is NULL OR receiver_user_id = :receiverId) " +
+                            "AND (:sentBefore is NULL OR posted_at < :sentBefore) " +
+                            "AND (:sentAfter is NULL OR posted_at > :sentAfter)")
+                        .bind("senderId", filter.getSenderId())
+                        .bind("receiverId", filter.getReceiverId())
+                        .bind("sentBefore", filter.getSentBefore())
+                        .bind("sentAfter", filter.getSentAfter())
                         .mapTo(Integer.class)
                         .one()
         );

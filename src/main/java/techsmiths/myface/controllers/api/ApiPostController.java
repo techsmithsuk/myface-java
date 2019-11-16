@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import techsmiths.myface.helpers.Pagination;
+import techsmiths.myface.models.apiModels.PostsFilter;
 import techsmiths.myface.models.apiModels.PostListResponseModel;
 import techsmiths.myface.models.apiModels.PostModel;
 import techsmiths.myface.models.apiModels.UpdatePostModel;
@@ -26,13 +26,11 @@ public class ApiPostController {
 
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public PostListResponseModel getPosts(@RequestParam(value = "page", required = false) Integer page,
-                                          @RequestParam(value = "page_size", required = false) Integer pageSize) {
-        int numberOfPosts = postService.countAllPosts();
-        Pagination pagination = new Pagination(page, pageSize, numberOfPosts);
-        List<PostWithUsers> posts = postService.getAllPosts(pagination);
+    public PostListResponseModel getPosts(PostsFilter filter) {
+        int numberOfPosts = postService.countPosts(filter);
+        List<PostWithUsers> posts = postService.searchPosts(filter);
 
-        return new PostListResponseModel(posts, pagination);
+        return new PostListResponseModel(posts, filter, numberOfPosts);
     }
 
     @ResponseBody
@@ -55,7 +53,7 @@ public class ApiPostController {
         PostWithUsers post = postService.updatePost(id, updatePostModel);
         return new PostModel(post);
     }
-    
+
     @ResponseBody
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deletePost(@PathVariable("id") Long id) {

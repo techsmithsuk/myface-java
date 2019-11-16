@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import techsmiths.myface.helpers.Pagination;
+import techsmiths.myface.models.apiModels.PostsFilter;
 import techsmiths.myface.models.apiModels.UpdatePostModel;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 import techsmiths.myface.models.viewmodels.AllPostsViewModel;
@@ -25,11 +26,8 @@ public class PostController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView getAllPostsPage(@RequestParam(value = "page", required = false) Integer page,
-                                        @RequestParam(value = "pageSize", required = false) Integer pageSize) {
-        int numberOfPosts = postService.countAllPosts();
-        Pagination pagination = new Pagination(page, pageSize, numberOfPosts);
-        List<PostWithUsers> posts = postService.getAllPosts(pagination);
+    public ModelAndView getAllPostsPage(PostsFilter filter) {
+        List<PostWithUsers> posts = postService.searchPosts(filter);
         AllPostsViewModel postsViewModel = new AllPostsViewModel(posts);
 
         return new ModelAndView("posts/allPosts", "model", postsViewModel);

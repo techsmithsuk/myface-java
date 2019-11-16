@@ -14,11 +14,11 @@ public class PostWithUsersMapper implements RowMapper<PostWithUsers> {
         PostWithUsers post = new PostWithUsers();
 
         post.setId(rs.getLong("post.id"));
-        post.setSenderId(rs.getLong("post.sender_id"));
-        post.setReceiverId(rs.getLong("post.receiver_id"));
+        post.setSenderId(rs.getLong("post.sender_user_id"));
+        post.setReceiverId(rs.getLong("post.receiver_user_id"));
         post.setMessage(rs.getString("post.message"));
         post.setImage(rs.getString("post.image"));
-        post.setPostedAt(rs.getDate("post.posted_at"));
+        post.setPostedAt(rs.getTimestamp("post.posted_at"));
         post.setSender(createUser(rs, "sender"));
         post.setReceiver(createUser(rs, "receiver"));
 
