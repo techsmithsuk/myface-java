@@ -1,6 +1,7 @@
 package techsmiths.myface.services;
 
 import techsmiths.myface.models.apiModels.comments.CommentFilter;
+import techsmiths.myface.models.apiModels.comments.UpdateCommentModel;
 import techsmiths.myface.models.dbmodels.Comment;
 
 import java.util.List;
@@ -45,5 +46,20 @@ public class CommentService extends DatabaseService {
                         .mapToBean(Comment.class)
                         .one()
         );
+    }
+
+    public Comment updateComment(Long id, UpdateCommentModel updateCommentModel) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate(
+                        "UPDATE comments " +
+                            "SET (post_id = :postId, sender_id = :senderId, message = :message, sent_at = :sentAt) " +
+                            "WHERE id = :id")
+                    .bind("postId", updateCommentModel.getPostId())
+                    .bind("senderId", updateCommentModel.getSenderId())
+                    .bind("message", updateCommentModel.getMessage())
+                    .bind("sentAt", updateCommentModel.getSentAt())
+                    .execute()
+        );
+        return getComment(id);
     }
 }

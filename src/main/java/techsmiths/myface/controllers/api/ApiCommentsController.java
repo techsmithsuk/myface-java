@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import techsmiths.myface.models.apiModels.comments.CommentFilter;
 import techsmiths.myface.models.apiModels.comments.CommentListResponseModel;
 import techsmiths.myface.models.apiModels.comments.CommentModel;
+import techsmiths.myface.models.apiModels.comments.UpdateCommentModel;
 import techsmiths.myface.models.dbmodels.Comment;
 import techsmiths.myface.services.CommentService;
 
@@ -20,7 +21,7 @@ public class ApiCommentsController {
     public ApiCommentsController(CommentService commentService) {
         this.commentService = commentService;
     }
-    
+
     @ResponseBody
     @RequestMapping("")
     public CommentListResponseModel searchComments(CommentFilter filter) {
@@ -34,6 +35,13 @@ public class ApiCommentsController {
     @RequestMapping("/{id}")
     public CommentModel getComment(@PathVariable("id") Long id) {
         Comment comment = commentService.getComment(id);
+        return new CommentModel(comment);
+    }
+
+    @ResponseBody
+    @RequestMapping("/{id}")
+    public CommentModel updateComment(@PathVariable("id") Long id, UpdateCommentModel updateCommentModel) {
+        Comment comment = commentService.updateComment(id, updateCommentModel);
         return new CommentModel(comment);
     }
 }
