@@ -4,9 +4,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import techsmiths.myface.models.apiModels.comments.CommentFilter;
+import techsmiths.myface.models.apiModels.comments.CommentListResponseModel;
 import techsmiths.myface.models.apiModels.comments.CommentModel;
 import techsmiths.myface.models.dbmodels.Comment;
 import techsmiths.myface.services.CommentService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/comments")
@@ -17,6 +21,15 @@ public class ApiCommentsController {
         this.commentService = commentService;
     }
     
+    @ResponseBody
+    @RequestMapping("")
+    public CommentListResponseModel searchComments(CommentFilter filter) {
+        int numberOfPosts = commentService.countComments(filter);
+        List<Comment> posts = commentService.searchComments(filter);
+
+        return new CommentListResponseModel(posts, filter, numberOfPosts);
+    }
+
     @ResponseBody
     @RequestMapping("/{id}")
     public CommentModel getComment(@PathVariable("id") Long id) {
