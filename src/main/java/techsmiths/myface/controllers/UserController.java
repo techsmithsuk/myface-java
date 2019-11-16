@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.dbmodels.User;
 import techsmiths.myface.models.viewmodels.AllUsersViewModel;
 import techsmiths.myface.models.viewmodels.UserViewModel;
@@ -23,11 +24,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView getAllUsersPage(@RequestParam(value = "page", required = false) Integer page) {
-        int page_index = page == null ? 0 : page - 1;
-        int offset = page_index * PAGE_SIZE;
-
-        List<User> users = userService.getAllUsers(PAGE_SIZE, offset);
+    public ModelAndView getAllUsersPage(@RequestParam(value = "page", required = false) Integer page,
+                                        @RequestParam(value = "page_size", required = false) Integer pageSize) {
+        int numberOfPosts = userService.countAllPosts();
+        Pagination pagination = new Pagination(page, pageSize, numberOfPosts);
+        List<User> users = userService.getAllUsers(pagination);
         AllUsersViewModel allUsersViewModel = new AllUsersViewModel(users);
 
         return new ModelAndView("users/allUsers", "model", allUsersViewModel);

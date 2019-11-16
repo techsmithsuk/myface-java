@@ -2,6 +2,7 @@ package techsmiths.myface.services;
 
 import org.jdbi.v3.core.mapper.reflect.BeanMapper;
 import org.springframework.stereotype.Service;
+import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.apiModels.CreatePostModel;
 import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.models.dbmodels.Receiver;
@@ -14,7 +15,7 @@ import java.util.List;
 @Service
 public class PostService extends DatabaseService {
 
-    public List<Post> getAllPosts(int limit, int offset) {
+    public List<Post> getAllPosts(Pagination pagination) {
         return jdbi.withHandle(handle ->
                 new ArrayList<>(handle.createQuery("" +
                             "SELECT " +
@@ -42,8 +43,8 @@ public class PostService extends DatabaseService {
                             "ORDER BY post.posted_at DESC " +
                             "LIMIT :limit " +
                             "OFFSET :offset")
-                        .bind("limit", limit)
-                        .bind("offset", offset)
+                        .bind("limit", pagination.getLimit())
+                        .bind("offset", pagination.getOffset())
                         .registerRowMapper(BeanMapper.factory(Post.class, "post"))
                         .registerRowMapper(BeanMapper.factory(Sender.class, "sender"))
                         .registerRowMapper(BeanMapper.factory(Receiver.class, "receiver"))

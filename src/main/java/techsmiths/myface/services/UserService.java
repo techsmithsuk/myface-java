@@ -1,6 +1,7 @@
 package techsmiths.myface.services;
 
 import org.springframework.stereotype.Service;
+import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.dbmodels.User;
 
 import java.util.List;
@@ -8,11 +9,11 @@ import java.util.List;
 @Service
 public class UserService extends DatabaseService {
 
-    public List<User> getAllUsers(int limit, int offset) {
+    public List<User> getAllUsers(Pagination pagination) {
         return jdbi.withHandle(handle ->
                 handle.createQuery("SELECT * FROM users LIMIT :limit OFFSET :offset")
-                        .bind("limit", limit)
-                        .bind("offset", offset)
+                        .bind("limit", pagination.getLimit())
+                        .bind("offset", pagination.getOffset())
                         .mapToBean(User.class)
                         .list()
         );

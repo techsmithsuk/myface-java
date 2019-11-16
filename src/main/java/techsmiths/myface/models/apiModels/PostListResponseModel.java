@@ -1,5 +1,6 @@
 package techsmiths.myface.models.apiModels;
 
+import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.models.viewmodels.PostViewModel;
 
@@ -8,13 +9,11 @@ import java.util.stream.Collectors;
 
 public class PostListResponseModel {
     private List<PostViewModel> posts;
-    private Boolean hasNextPage;
-    private Integer currentPage;
+    private Pagination pagination;
 
-    public PostListResponseModel(List<Post> posts, Integer currentPage, Boolean hasNextPage) {
+    public PostListResponseModel(List<Post> posts, Pagination pagination) {
         this.posts = posts.stream().map(PostViewModel::new).collect(Collectors.toList());
-        this.hasNextPage = hasNextPage;
-        this.currentPage = currentPage;
+        this.pagination = pagination;
     }
 
     public List<PostViewModel> getPosts() {
@@ -22,17 +21,17 @@ public class PostListResponseModel {
     }
 
     public String getNextPage() {
-        if (!hasNextPage) {
+        if (!pagination.hasNextPage()) {
             return null;
         }
-        return String.format("/api/posts?page=%d", currentPage + 1);
+        return String.format("/api/posts?page=%d", pagination.getPageNumber() + 1);
     }
 
     public String getPreviousPage() {
-        if (currentPage <= 1) {
+        if (!pagination.hasPreviousPage()) {
             return null;
         }
 
-        return String.format("/api/posts?page=%d", currentPage - 1);
+        return String.format("/api/posts?page=%d", pagination.getPageNumber() - 1);
     }
 }

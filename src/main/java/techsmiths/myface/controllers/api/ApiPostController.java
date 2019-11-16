@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.apiModels.PostListResponseModel;
 import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.services.PostService;
@@ -15,8 +16,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/api/posts")
 public class ApiPostController {
-    private static final int PAGE_SIZE = 10;
-
     private final PostService postService;
 
     @Autowired
@@ -26,14 +25,12 @@ public class ApiPostController {
 
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public PostListResponseModel getPosts(@RequestParam(value = "page") int page,
-                                          @RequestParam(value = "page_size", required = false) Integer requestedPageSize) {
-        int pageSize = requestedPageSize == null ? PAGE_SIZE : requestedPageSize;
-        int offset = (page - 1) * PAGE_SIZE;
-        List<Post> posts = postService.getAllPosts(PAGE_SIZE, offset);
+    public PostListResponseModel getPosts(@RequestParam(value = "page", required = false) Integer page,
+                                          @RequestParam(value = "page_size", required = false) Integer pageSize) {
         int numberOfPosts = postService.countAllPosts();
-        boolean hasNextPage = pageSize * page <= numberOfPosts;
+        Pagination pagination = new Pagination(page, pageSize, numberOfPosts);
+        List<Post> posts = postService.getAllPosts(pagination);
 
-        return new PostListResponseModel(posts, page, hasNextPage);
+        return new PostListResponseModel(posts, pagination);
     }
 }

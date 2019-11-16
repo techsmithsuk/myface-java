@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.models.apiModels.CreatePostModel;
 import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.models.viewmodels.AllPostsViewModel;
@@ -17,8 +18,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/posts")
 public class PostController {
-    private static final int PAGE_SIZE = 10;
-
     private final PostService postService;
 
     public PostController(PostService postService) {
@@ -26,11 +25,11 @@ public class PostController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ModelAndView getAllPostsPage(@RequestParam(value = "page", required = false) Integer page) {
-        int page_index = page == null ? 0 : page - 1;
-        int offset = page_index * PAGE_SIZE;
-
-        List<Post> posts = postService.getAllPosts(PAGE_SIZE, offset);
+    public ModelAndView getAllPostsPage(@RequestParam(value = "page", required = false) Integer page,
+                                        @RequestParam(value = "pageSize", required = false) Integer pageSize) {
+        int numberOfPosts = postService.countAllPosts();
+        Pagination pagination = new Pagination(page, pageSize, numberOfPosts);
+        List<Post> posts = postService.getAllPosts(pagination);
         AllPostsViewModel postsViewModel = new AllPostsViewModel(posts);
 
         return new ModelAndView("posts/allPosts", "model", postsViewModel);
