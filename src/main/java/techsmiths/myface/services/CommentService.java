@@ -80,4 +80,12 @@ public class CommentService extends DatabaseService {
         );
         return getLastAddedId();
     }
+
+    public void deleteComment(Long id) {
+        jdbi.withHandle(handle ->
+                handle.createUpdate("DELETE FROM comments WHERE id = :id")
+                        .bind("id", id)
+                        .execute()
+        );
+    }
 }

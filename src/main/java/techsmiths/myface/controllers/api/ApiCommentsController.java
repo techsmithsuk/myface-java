@@ -53,4 +53,10 @@ public class ApiCommentsController {
         URI location = URI.create("/api/comments/" + id);
         return ResponseEntity.created(location).build();
     }
+
+    @ResponseBody
+    @RequestMapping("/{id}")
+    public void deleteComment(@PathVariable("id") Long id) {
+        commentService.deleteComment(id);
+    }
 }
