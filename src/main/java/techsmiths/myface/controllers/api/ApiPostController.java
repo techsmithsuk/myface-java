@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import techsmiths.myface.helpers.Pagination;
-import techsmiths.myface.models.apiModels.CreatePostModel;
 import techsmiths.myface.models.apiModels.PostListResponseModel;
 import techsmiths.myface.models.apiModels.PostModel;
 import techsmiths.myface.models.apiModels.UpdatePostModel;
@@ -43,10 +42,10 @@ public class ApiPostController {
         return new PostModel(post);
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST)
-    public ResponseEntity getPost(@ModelAttribute CreatePostModel post) {
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ResponseEntity createPost(@ModelAttribute UpdatePostModel post) {
         Long id = postService.createPost(post);
-        URI location = URI.create(String.format("/posts/%d", id));
+        URI location = URI.create(String.format("/api/posts/%d", id));
         return ResponseEntity.created(location).build();
     }
 

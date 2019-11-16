@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import techsmiths.myface.helpers.Pagination;
+import techsmiths.myface.models.apiModels.UpdateUserModel;
 import techsmiths.myface.models.dbmodels.User;
 import techsmiths.myface.models.viewmodels.AllUsersViewModel;
 import techsmiths.myface.models.viewmodels.UserViewModel;
@@ -54,7 +55,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public RedirectView createUser(@ModelAttribute User user) {
+    public RedirectView createUser(@ModelAttribute UpdateUserModel user) {
         userService.createUser(user);
         return new RedirectView("/users");
     }

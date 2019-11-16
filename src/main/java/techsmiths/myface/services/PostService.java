@@ -3,11 +3,10 @@ package techsmiths.myface.services;
 import org.springframework.stereotype.Service;
 import techsmiths.myface.helpers.Pagination;
 import techsmiths.myface.helpers.PostWithUsersMapper;
-import techsmiths.myface.models.apiModels.CreatePostModel;
 import techsmiths.myface.models.apiModels.UpdatePostModel;
-import techsmiths.myface.models.dbmodels.Post;
 import techsmiths.myface.models.dbmodels.PostWithUsers;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -46,24 +45,21 @@ public class PostService extends DatabaseService {
         );
     }
 
-    public Long createPost(CreatePostModel post) {
+    public Long createPost(UpdatePostModel post) {
         jdbi.withHandle(handle ->
                 handle.createUpdate(
                         "INSERT INTO posts " +
                                 "(sender_user_id, receiver_user_id, message, image, posted_at) " +
                                 "VALUES " +
-                                "(:senderUserId, :receiverUserId, :message, :image NOW())")
+                                "(:senderUserId, :receiverUserId, :message, :image, :postedAt)")
                         .bind("senderUserId", post.getSenderId())
                         .bind("receiverUserId", post.getReceiverId())
                         .bind("message", post.getMessage())
                         .bind("image", post.getImage())
+                        .bind("postedAt", post.getPostedAt() == null ? new Date() : post.getPostedAt())
                         .execute()
         );
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT LAST_INSERT_ID()")
-                        .mapTo(Long.class)
-                        .one()
-        );
+        return getLastAddedId();
     }
 
     public int countAllPosts() {

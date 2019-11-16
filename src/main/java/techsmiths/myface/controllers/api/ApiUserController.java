@@ -1,17 +1,17 @@
 package techsmiths.myface.controllers.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import techsmiths.myface.helpers.Pagination;
+import techsmiths.myface.models.apiModels.UpdateUserModel;
 import techsmiths.myface.models.apiModels.UserListResponseModel;
 import techsmiths.myface.models.apiModels.UserModel;
 import techsmiths.myface.models.dbmodels.User;
 import techsmiths.myface.services.UserService;
 
+import java.net.URI;
 import java.util.List;
 
 @Controller
@@ -40,5 +40,12 @@ public class ApiUserController {
     public UserModel getUserDetails(@PathVariable("id") Long id) {
         User user = userService.getUserDetails(id);
         return new UserModel(user);
+    }
+
+    @RequestMapping("/create")
+    public ResponseEntity createUser(@ModelAttribute UpdateUserModel updateUserModel) {
+        Long id = userService.createUser(updateUserModel);
+        URI location = URI.create(String.format("/api/users/%d", id));
+        return ResponseEntity.created(location).build();
     }
 }

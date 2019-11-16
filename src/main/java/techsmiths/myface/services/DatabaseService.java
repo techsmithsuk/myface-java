@@ -26,17 +26,11 @@ public abstract class DatabaseService {
         jdbi = Jdbi.create(connectionString);
     }
 
-    private String selectColumns(List<String> columns, String table_alias) {
-        return columns.stream()
-                .map(column -> String.format("%s.%s as %s_%s ", table_alias, column, table_alias, column))
-                .collect(Collectors.joining());
-    }
-
-    protected String selectAllPostColumns(String posts_alias) {
-        return selectColumns(Post.getAllColumnNames(), posts_alias);
-    }
-
-    protected String selectAllUserColumns(String user_alias) {
-        return selectColumns(Post.getAllColumnNames(), user_alias);
+    protected Long getLastAddedId() {
+        return jdbi.withHandle(handle ->
+                handle.createQuery("SELECT LAST_INSERT_ID()")
+                        .mapTo(Long.class)
+                        .one()
+        );
     }
 }
