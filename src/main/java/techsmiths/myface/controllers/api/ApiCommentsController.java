@@ -3,10 +3,7 @@ package techsmiths.myface.controllers.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import techsmiths.myface.models.apiModels.comments.CommentFilter;
 import techsmiths.myface.models.apiModels.comments.CommentListResponseModel;
 import techsmiths.myface.models.apiModels.comments.CommentModel;
@@ -19,6 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/comments")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ApiCommentsController {
     private final CommentService commentService;
 

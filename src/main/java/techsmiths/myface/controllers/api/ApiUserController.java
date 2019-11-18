@@ -26,6 +26,7 @@ public class ApiUserController {
 
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:3000")
     public UserListResponseModel getUsers(UsersFilter filter) {
         int numberOfPosts = userService.countUsers(filter);
         List<User> users = userService.searchUsers(filter);

@@ -26,6 +26,7 @@ public class ApiPostController {
 
     @ResponseBody
     @RequestMapping(value = "", method = RequestMethod.GET)
+    @CrossOrigin(origins = "http://localhost:3000")
     public PostListResponseModel getPosts(PostsFilter filter) {
         int numberOfPosts = postService.countPosts(filter);
         List<PostWithUsers> posts = postService.searchPosts(filter);
