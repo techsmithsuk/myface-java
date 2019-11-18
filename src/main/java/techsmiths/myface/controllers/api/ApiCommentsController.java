@@ -1,9 +1,11 @@
 package techsmiths.myface.controllers.api;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import techsmiths.myface.models.apiModels.comments.CommentFilter;
 import techsmiths.myface.models.apiModels.comments.CommentListResponseModel;
@@ -20,12 +22,13 @@ import java.util.List;
 public class ApiCommentsController {
     private final CommentService commentService;
 
+    @Autowired
     public ApiCommentsController(CommentService commentService) {
         this.commentService = commentService;
     }
 
     @ResponseBody
-    @RequestMapping("")
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public CommentListResponseModel searchComments(CommentFilter filter) {
         int numberOfPosts = commentService.countComments(filter);
         List<Comment> posts = commentService.searchComments(filter);
@@ -34,20 +37,20 @@ public class ApiCommentsController {
     }
 
     @ResponseBody
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public CommentModel getComment(@PathVariable("id") Long id) {
         Comment comment = commentService.getComment(id);
         return new CommentModel(comment);
     }
 
     @ResponseBody
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     public CommentModel updateComment(@PathVariable("id") Long id, UpdateCommentModel updateCommentModel) {
         Comment comment = commentService.updateComment(id, updateCommentModel);
         return new CommentModel(comment);
     }
 
-    @RequestMapping("/create")
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity createComment(UpdateCommentModel updateCommentModel) {
         Long id = commentService.createComment(updateCommentModel);
         URI location = URI.create("/api/comments/" + id);
@@ -55,7 +58,7 @@ public class ApiCommentsController {
     }
 
     @ResponseBody
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteComment(@PathVariable("id") Long id) {
         commentService.deleteComment(id);
     }

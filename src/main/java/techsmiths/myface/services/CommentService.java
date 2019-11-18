@@ -1,5 +1,6 @@
 package techsmiths.myface.services;
 
+import org.springframework.stereotype.Service;
 import techsmiths.myface.models.apiModels.comments.CommentFilter;
 import techsmiths.myface.models.apiModels.comments.UpdateCommentModel;
 import techsmiths.myface.models.dbmodels.Comment;
@@ -7,6 +8,7 @@ import techsmiths.myface.models.dbmodels.Comment;
 import java.util.Date;
 import java.util.List;
 
+@Service
 public class CommentService extends DatabaseService {
 
     public List<Comment> searchComments(CommentFilter filter) {
