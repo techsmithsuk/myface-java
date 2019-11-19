@@ -82,7 +82,7 @@ public class UserService extends DatabaseService {
     }
 
     public Long createUser(UpdateUserModel user) {
-        jdbi.withHandle(handle ->
+        return jdbi.withHandle(handle -> {
                 handle.createUpdate(
                         "INSERT INTO users " +
                                 "(username, email, first_name, last_name, profile_image, banner_image) " +
@@ -94,9 +94,13 @@ public class UserService extends DatabaseService {
                         .bind("lastName", user.getLastName())
                         .bind("profileImage", user.getProfileImage())
                         .bind("bannerImage", user.getBannerImage())
-                        .execute()
+                        .execute();
+
+                return handle.createQuery("SELECT LAST_INSERT_ID()")
+                        .mapTo(Long.class)
+                        .one();
+            }
         );
-        return getLastAddedId();
     }
 
     public void deleteUser(Long id) {

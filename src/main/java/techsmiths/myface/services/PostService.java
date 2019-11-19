@@ -54,20 +54,24 @@ public class PostService extends DatabaseService {
     }
 
     public Long createPost(UpdatePostModel post) {
-        jdbi.withHandle(handle ->
-                handle.createUpdate(
-                        "INSERT INTO posts " +
-                                "(sender_user_id, receiver_user_id, message, image, posted_at) " +
-                                "VALUES " +
-                                "(:senderUserId, :receiverUserId, :message, :image, :postedAt)")
-                        .bind("senderUserId", post.getSenderId())
-                        .bind("receiverUserId", post.getReceiverId())
-                        .bind("message", post.getMessage())
-                        .bind("image", post.getImage())
-                        .bind("postedAt", post.getPostedAt() == null ? new Date() : post.getPostedAt())
-                        .execute()
+        return jdbi.withHandle(handle -> {
+                    handle.createUpdate(
+                            "INSERT INTO posts " +
+                                    "(sender_user_id, receiver_user_id, message, image, posted_at) " +
+                                    "VALUES " +
+                                    "(:senderUserId, :receiverUserId, :message, :image, :postedAt)")
+                            .bind("senderUserId", post.getSenderId())
+                            .bind("receiverUserId", post.getReceiverId())
+                            .bind("message", post.getMessage())
+                            .bind("image", post.getImage())
+                            .bind("postedAt", post.getPostedAt() == null ? new Date() : post.getPostedAt())
+                            .execute();
+
+                    return handle.createQuery("SELECT LAST_INSERT_ID()")
+                            .mapTo(Long.class)
+                            .one();
+                }
         );
-        return getLastAddedId();
     }
 
     public int countPosts(PostsFilter filter) {
@@ -91,13 +95,11 @@ public class PostService extends DatabaseService {
         jdbi.withHandle(handle ->
                 handle.createUpdate(
                         "UPDATE posts SET " +
-                        "( " +
-                            "senderId = :senderId " +
-                            "receiverId = :receiverId " +
-                            "message = :message " +
-                            "image = :image " +
-                            "posted_at = :postedAt " +
-                        ") " +
+                        "sender_user_id = :senderId, " +
+                        "receiver_user_id = :receiverId, " +
+                        "message = :message, " +
+                        "image = :image, " +
+                        "posted_at = :postedAt " +
                         "WHERE id = :id")
                         .bind("id", id)
                         .bind("senderId", updatePostModel.getSenderId())

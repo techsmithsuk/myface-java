@@ -25,12 +25,4 @@ public abstract class DatabaseService {
 
         jdbi = Jdbi.create(connectionString);
     }
-
-    protected Long getLastAddedId() {
-        return jdbi.withHandle(handle ->
-                handle.createQuery("SELECT LAST_INSERT_ID()")
-                        .mapTo(Long.class)
-                        .one()
-        );
-    }
 }

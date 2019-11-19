@@ -1,5 +1,7 @@
 package techsmiths.myface.models.apiModels.posts;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class UpdatePostModel {
@@ -45,6 +47,7 @@ public class UpdatePostModel {
         return postedAt;
     }
 
+    @DateTimeFormat(pattern = PostModel.DATE_PATTERN)
     public void setPostedAt(Date postedAt) {
         this.postedAt = postedAt;
     }

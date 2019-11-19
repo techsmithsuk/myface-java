@@ -55,7 +55,7 @@ public class CommentService extends DatabaseService {
         jdbi.withHandle(handle ->
                 handle.createUpdate(
                         "UPDATE comments " +
-                            "SET (post_id = :postId, sender_id = :senderId, message = :message, sent_at = :sentAt) " +
+                            "SET post_id = :postId, sender_id = :senderId, message = :message, sent_at = :sentAt " +
                             "WHERE id = :id")
                     .bind("postId", updateCommentModel.getPostId())
                     .bind("senderId", updateCommentModel.getSenderId())
@@ -67,20 +67,24 @@ public class CommentService extends DatabaseService {
     }
 
     public Long createComment(UpdateCommentModel comment) {
-        jdbi.withHandle(handle ->
+        return jdbi.withHandle(handle -> {
                 handle.createUpdate(
                         "INSERT INTO comments " +
-                            "(sender_id, post_id, message, sent_at) " +
-                            "VALUES " +
-                            "(:senderId, :postId, :message, :sentAt)"
+                                "(sender_id, post_id, message, sent_at) " +
+                                "VALUES " +
+                                "(:senderId, :postId, :message, :sentAt)"
                         )
                         .bind("senderId", comment.getSenderId())
                         .bind("postId", comment.getPostId())
                         .bind("message", comment.getMessage())
                         .bind("sentAt", comment.getSentAt() == null ? new Date() : comment.getSentAt())
-                        .execute()
+                        .execute();
+
+                return handle.createQuery("SELECT LAST_INSERT_ID()")
+                        .mapTo(Long.class)
+                        .one();
+            }
         );
-        return getLastAddedId();
     }
 
     public void deleteComment(Long id) {

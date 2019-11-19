@@ -16,6 +16,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/posts")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ApiPostController {
     private final PostService postService;
 
