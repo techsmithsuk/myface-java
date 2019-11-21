@@ -62,7 +62,7 @@ public class UserService extends DatabaseService {
         jdbi.withHandle(handle ->
                 handle.createUpdate(
                             "UPDATE users SET " +
-                                    "username = :username" +
+                                    "username = :username " +
                                     "email = :email" +
                                     "first_name = :firstName" +
                                     "last_name = :lastName" +
